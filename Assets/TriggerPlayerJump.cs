@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class TriggerPlayerJump : MonoBehaviour
 {
+    public GameObject ledgePrompt;
+    public Transform promptLocation;
     public PlayerController pControl;
+    public enum Type
+    {
+        Small,
+        Medium,
+        Tall
+    }
+
+    public Type _type;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +31,19 @@ public class TriggerPlayerJump : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            pControl.isClimbing = true;
+            if (_type == Type.Small)
+            {
+                pControl.isClimbing = true;
+            }
+            if (_type == Type.Medium)
+            {
+                ledgePrompt.SetActive(true);
+
+            }
+            if (_type == Type.Tall)
+            {
+                pControl.highJump = true;
+            }
         }
     }
 
@@ -30,6 +52,11 @@ public class TriggerPlayerJump : MonoBehaviour
         if(other.tag == "Player")
         {
             pControl.isClimbing = false;
+            if (_type == Type.Medium)
+            {
+                ledgePrompt.SetActive(false);
+
+            }
         }
     }
 }

@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 10f;
     public Vector3 movetarget;
     public bool isClimbing;
+    public bool isClimbingLedge;
+    public bool highJump;
     private Rigidbody2D rb;
 
     void Start()
@@ -47,8 +49,10 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void HandleLedges()
+    public void HandleLedges()
     {
-      
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce+20f);
+
     }
 }

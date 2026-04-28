@@ -14,6 +14,7 @@ public class RoomControl : MonoBehaviour
     public int changeRoomID;
     public Transform _mainCamTransform;
     public Transform[] roomTransforms;
+    public Transform[] playerTransforms;
     public GameObject crossfader;
     public Animation xFade;
 
@@ -36,6 +37,7 @@ public class RoomControl : MonoBehaviour
     {
         roomID = changeRoomID;
         _mainCamTransform.position = roomTransforms[roomID].position;
+        player.position = playerTransforms[roomID].position;
     }
 
 }
