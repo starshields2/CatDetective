@@ -26,25 +26,25 @@ public class Dialogue : MonoBehaviour
     void Awake()
     {
         speakerName.text = unitName;
-        NextLine();
+        
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    if(textComponent.text == lines[index])
-        //    {
-        //        NextLine();
-        //    }
-        //    else
-        //    {
-        //        StopAllCoroutines();
-        //        textComponent.text = lines[index];
-        //    }
-        //}
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (textComponent.text == lines[index])
+            {
+                NextLine();
+            }
+            else
+            {
+                StopAllCoroutines();
+                textComponent.text = lines[index];
+            }
+        }
     }
     [ContextMenu("Dialogue")]
     public void StartDialogue()
@@ -63,15 +63,15 @@ public class Dialogue : MonoBehaviour
             yield return new WaitForSeconds(textSpeed);
             textComponent.text += c;  
         }
+            textStart = false;
         }
-        index+=1;
+        //index+=1;
     }
 
    public void NextLine()
     {
-        if(index < lines.Length - 1)
+        if(index < lines.Length)
         {
-            index++;
             StopAllCoroutines();
             textComponent.text = string.Empty;
             StartCoroutine(TypeLine());
@@ -81,6 +81,7 @@ public class Dialogue : MonoBehaviour
          
             textComponent.text = "Error: NO MORE LINES!";
         }
+        index += 1;
     }
 
     [ContextMenu("Handle Overworld Dialogue")]
