@@ -5,6 +5,7 @@ using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
+    public TextMeshPro _inGameText;
     public TextMeshProUGUI textComponent;
     public TextMeshProUGUI speakerName;
     public bool textStart;
@@ -16,6 +17,17 @@ public class Dialogue : MonoBehaviour
     [SerializeField] private AudioSource _notification;
 
     public int index;
+
+    public enum SpeechType
+    {
+        Tutorial,
+        InGame,
+        BigBox,
+        Other
+    }
+
+    public SpeechType speechType = SpeechType.BigBox;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +38,7 @@ public class Dialogue : MonoBehaviour
     void Awake()
     {
         speakerName.text = unitName;
-        
+
        
     }
 
@@ -60,8 +72,25 @@ public class Dialogue : MonoBehaviour
             textStart = true;
     foreach (char c in lines[index].ToCharArray())
         {
-            yield return new WaitForSeconds(textSpeed);
-            textComponent.text += c;  
+
+                switch (speechType)
+                {
+                    case SpeechType.Tutorial:
+                        break;
+                    case SpeechType.InGame:
+                        yield return new WaitForSeconds(textSpeed);
+                        _inGameText.text += c;
+                        break;
+                    case SpeechType.BigBox:
+                        yield return new WaitForSeconds(textSpeed);
+                        textComponent.text += c;
+                        break;
+                    case SpeechType.Other:
+                        break;
+                    default:
+                        break;
+                }
+  
         }
             textStart = false;
         }
