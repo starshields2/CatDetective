@@ -5,6 +5,7 @@ using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
+    //public PlayerController _conrol;
     public TextMeshPro _inGameText;
     public TextMeshProUGUI textComponent;
     public TextMeshProUGUI speakerName;

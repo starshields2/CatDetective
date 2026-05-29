@@ -7,6 +7,7 @@ public class NonPlayerCharacter : MonoBehaviour
     public Dialogue _dialogue;
     public Inventory _inventorySystem;
     public GameObject ItemPickedUp;
+    public PlayerController _playerController;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +49,7 @@ public class NonPlayerCharacter : MonoBehaviour
         _dialogue.itemDialogue = _itemInfo._dedicatedLine;
         _inventorySystem.AddToInventory();
         yield return new WaitForSeconds(2f);
+        
         DestroyItemPickedUp();
         StartPlayItemDialogue();
 
@@ -57,6 +59,7 @@ public class NonPlayerCharacter : MonoBehaviour
     {
         Destroy(ItemPickedUp);
         ItemPickedUp = null;
+        _playerController.itemGrabbed = false;
     }
 
     void StartPlayItemDialogue()

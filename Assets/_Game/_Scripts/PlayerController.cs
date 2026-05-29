@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     
     private Vector3 targetPosition;
     private float currentHeightLevel = 0;
+    [Header("Inventory")]
+    public bool itemGrabbed; //whether or not quinn is carrying an item atm.
 
     void Start()
     {
