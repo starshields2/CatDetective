@@ -11,6 +11,7 @@ public class Dialogue : MonoBehaviour
     public bool textStart;
     public string unitName;
     public string[] lines;
+    public string itemDialogue; //special text for item dialogue.
     public float textSpeed;
     public float waitTime;
     [SerializeField] private Animation _animation;
@@ -130,4 +131,38 @@ public class Dialogue : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         _animation.Play("PortraitNotificationDown");
     }
+
+    public IEnumerator PlayItemDialogue()
+    {
+        if (!textStart)
+        {
+            textStart = true;
+            foreach (char c in itemDialogue.ToCharArray())
+            {
+
+                switch (speechType)
+                {
+                    case SpeechType.Tutorial:
+                        break;
+                    case SpeechType.InGame:
+                        yield return new WaitForSeconds(textSpeed);
+                        _inGameText.text += c;
+                        break;
+                    case SpeechType.BigBox:
+                        yield return new WaitForSeconds(textSpeed);
+                        textComponent.text += c;
+                        break;
+                    case SpeechType.Other:
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            textStart = false;
+        }
+        //index+=1;
+    }
+
+
 }

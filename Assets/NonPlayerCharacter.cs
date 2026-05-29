@@ -5,7 +5,8 @@ using UnityEngine;
 public class NonPlayerCharacter : MonoBehaviour
 {
     public Dialogue _dialogue;
-
+    public Inventory _inventorySystem;
+    public GameObject ItemPickedUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,14 @@ public class NonPlayerCharacter : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            StartTriggeredDialogue();
+            //StartTriggeredDialogue();
+        }
+        if(other.tag == "Item")
+        {
+            ItemPickedUp = other.gameObject;
+
+            StartCoroutine(StartItemCollection());
+
         }
     }
 
@@ -30,5 +38,29 @@ public class NonPlayerCharacter : MonoBehaviour
     {
         Debug.Log("Triggering Dialogues");
         _dialogue.NextLine();
+    }
+
+    public IEnumerator StartItemCollection()
+    {
+        InventoryPickup _itemInfo = ItemPickedUp.GetComponent<InventoryPickup>();
+        _inventorySystem.ItemTemplate = _itemInfo._itemData;
+        
+        _dialogue.itemDialogue = _itemInfo._dedicatedLine;
+        _inventorySystem.AddToInventory();
+        yield return new WaitForSeconds(2f);
+        DestroyItemPickedUp();
+        StartPlayItemDialogue();
+
+    }
+
+    void DestroyItemPickedUp()
+    {
+        Destroy(ItemPickedUp);
+        ItemPickedUp = null;
+    }
+
+    void StartPlayItemDialogue()
+    {
+        _dialogue.PlayItemDialogue();
     }
 }
