@@ -136,3 +136,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemData: {fileID: 11400000, guid: 51b383ba97d0b3c438b71a50ac618adf, type: 2}
   _DisplayIcon: {fileID: 2781396170815891895}
+  _inventoryButton: {fileID: 0}
+  isKeyItem: 1
