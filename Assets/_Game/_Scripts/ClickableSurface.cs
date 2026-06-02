@@ -30,7 +30,7 @@ public class ClickableSurface : MonoBehaviour
         if (col == null) return;
 
         // get top part of collision box, and use playerheight to set proper Y value for player movement
-        float topY = col.bounds.max.y;
+        float topY = col.bounds.max.y - (col.offset.y * transform.localScale.y);
         surfaceY = topY + (playerHeight / 2);
     }
 }

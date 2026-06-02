@@ -333,6 +333,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3730509099443707870, guid: d0f96e3056fd4884d9690946e659397f, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4502193450778758757, guid: d0f96e3056fd4884d9690946e659397f, type: 3}
       propertyPath: exitPoint
       value: 
@@ -622,6 +626,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryPickup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3623270034414783298, guid: 3644787a0c4a968409d601c6b06c0528, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3623270034414783310, guid: 3644787a0c4a968409d601c6b06c0528, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -829,6 +837,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4985370301512447713, guid: 4c4eb53b37a31954ea3c45e2cef38929, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4985370301512447714, guid: 4c4eb53b37a31954ea3c45e2cef38929, type: 3}
       propertyPath: m_RootOrder
       value: 6
