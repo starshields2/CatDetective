@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour
 {
+    public CaseManager _caseManager;
     public Item _itemData;
     public Image _DisplayIcon;
     [SerializeField] private Button _inventoryButton;

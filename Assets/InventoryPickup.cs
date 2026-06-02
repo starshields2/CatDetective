@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class InventoryPickup : MonoBehaviour
 {
+    public enum ItemType
+    {
+        Action, // does it do something in the world?
+        CaseItem, // should we give it to Peter?
+        Sequence // does it unlock/reveal something else?
+    }
+
+    public ItemType _itemType = ItemType.Action;
+    public CaseManager _caseManager;
     public GameObject _itemData; // what item prefab is it.
     public string _dedicatedLine; //what peter will say when quinn gives him the item.
     public bool inRangeOfPlayer; //are we in range of the player? y/n
@@ -11,12 +20,32 @@ public class InventoryPickup : MonoBehaviour
                                        
     public PlayerController playerController;
 
+    public ActionItem _actionItem;
+
+
     void OnMouseDown()
     {
+        //when we click on an item, check if it's in range of player and then determine what to do based on such.
+
         if (inRangeOfPlayer)
         {
-            Debug.Log("Get Item! Meow!");
-            AttachToPlayer();
+            switch (_itemType)
+            {
+                case ItemType.Action:
+                    Debug.Log("Trigger another Action.");
+                    TriggerAction();
+                    break;
+                case ItemType.CaseItem:
+                    Debug.Log("Give this item to Peter.");
+                    AttachToPlayer();
+                    break;
+                case ItemType.Sequence:
+                    Debug.Log("Active a different item.");
+                    break;
+                default:
+                    break;
+            }
+            
         }
     }
     public void OnTriggerEnter2D(Collider2D other)
@@ -49,5 +78,11 @@ public class InventoryPickup : MonoBehaviour
             Debug.Log("Already have an item, meow.");
             //feedback.
         }
+    }
+
+    void TriggerAction()
+    {
+        Debug.Log("Triggering Action");
+        _actionItem.TriggerNewAction();
     }
 }

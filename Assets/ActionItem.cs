@@ -2,19 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaseManager : MonoBehaviour
+public class ActionItem : MonoBehaviour
 {
-
-    [System.Serializable]
-    public struct CaseSteps
-    {
-        public bool step1;
-        public bool step2;
-        public bool step3;
-        public bool step4;
-    }
-
-    public CaseSteps _caseSteps;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +14,10 @@ public class CaseManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void TriggerNewAction()
+    {
+        Debug.Log("Action Triggered.");
     }
 }

@@ -48,11 +48,12 @@ public class NonPlayerCharacter : MonoBehaviour
         
         _dialogue.itemDialogue = _itemInfo._dedicatedLine;
         _inventorySystem.AddToInventory();
-        yield return new WaitForSeconds(2f);
+       
         
-        DestroyItemPickedUp();
+        
         StartPlayItemDialogue();
-
+        yield return new WaitForSeconds(3f);
+        DestroyItemPickedUp();
     }
 
     void DestroyItemPickedUp()
@@ -65,5 +66,6 @@ public class NonPlayerCharacter : MonoBehaviour
     void StartPlayItemDialogue()
     {
         _dialogue.PlayItemDialogue();
+        
     }
 }
