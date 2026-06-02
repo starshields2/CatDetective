@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
     public bool moving;
     
     private Vector3 targetPosition;
-    private float currentHeightLevel = 0; // used for comparing against height level of clickable surfaces
+    private float currentHeightLevel = 0;
+    [Header("Inventory")]
+    public bool itemGrabbed; //whether or not quinn is carrying an item atm.
 
     void Start()
     {
@@ -24,24 +26,20 @@ public class PlayerController : MonoBehaviour
 
     private void HandleClick()
     {
-        if (!Input.GetMouseButtonDown(0)) return; // stop function if there is no mouse input
+        if (!Input.GetMouseButtonDown(0)) return;
         
-        // get mouse position and send a raycast
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
-        // if raycast returns null stop function
         if (hit.collider == null) return;
         
-        // not yet used for anything, might be used for wall detection/sprite direction
         float direction = Mathf.Sign(mousePos.x - transform.position.x);
         Vector2 rayOrigin = (Vector2)transform.position + Vector2.right * (direction * 0.5f);
         
-        // if raycast doesn't hit an object with ClickableSurface stop function
         ClickableSurface surface = hit.collider.GetComponent<ClickableSurface>();
         if (!surface) return;
         
-        // set move location for the player using the x of the raycast, and the top part of the surface
         targetPosition = new Vector3(hit.point.x, surface.surfaceY, transform.position.z);
         
         if(CanMoveTo(surface))
@@ -56,16 +54,13 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        // if moving is false stop function
         if (!moving) return;
         
-        // move player towards target location
         transform.position = Vector3.MoveTowards(
             transform.position,
             targetPosition,
             speed * Time.deltaTime);
 
-        // stop moving once player gets to destination
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
             moving = false;
@@ -76,7 +71,7 @@ public class PlayerController : MonoBehaviour
     {
         float diff = targetSurface.heightLevel - currentHeightLevel;
         
-        if (diff == 0) return true; // if player is on the same level as current level, walk
+        if (diff == 0) return true;
         
         return false;
     }
@@ -89,10 +84,10 @@ public class PlayerController : MonoBehaviour
         float distance = Mathf.Abs(target.x - transform.position.x);
         
         // too far away
-        if (distance > maxJumpDistance) // compare X distance from jump destination, if too far then don't jump
+        if (distance > maxJumpDistance)
             return false;
         
-        if ((diff <= 2 && diff > 0) || diff < 0) return true; // if player is above, or under destination, jump up/down
+        if ((diff <= 2 && diff > 0) || diff < 0) return true;
 
         return false;
     }

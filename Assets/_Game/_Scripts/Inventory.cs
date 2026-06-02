@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     public GameObject InventoryParent; // The Parent GO where the inventory items go. 
     public GameObject ItemTemplate; // When giving Peter items, Quinn's script should replace this with the correct GO. 
     public int maxItems = 4;
-
+    public PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +36,7 @@ public class Inventory : MonoBehaviour
             GameObject itemToAdd = Instantiate(ItemTemplate, InventoryParent.transform.position, InventoryParent.transform.rotation);
             itemToAdd.transform.SetParent(InventoryParent.transform, false);
             _inventory.Add(itemToAdd);
+           
         }
         else if (_inventory.Count >= maxItems)
         {

@@ -5,6 +5,7 @@ using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
+    //public PlayerController _conrol;
     public TextMeshPro _inGameText;
     public TextMeshProUGUI textComponent;
     public TextMeshProUGUI speakerName;
@@ -132,7 +133,12 @@ public class Dialogue : MonoBehaviour
         _animation.Play("PortraitNotificationDown");
     }
 
-    public IEnumerator PlayItemDialogue()
+    public void PlayItemDialogue()
+    {
+        StartCoroutine(ItemDialoguePlayer());
+    }
+
+    public IEnumerator ItemDialoguePlayer()
     {
         if (!textStart)
         {
@@ -163,6 +169,7 @@ public class Dialogue : MonoBehaviour
         }
         //index+=1;
     }
+
 
 
 }
