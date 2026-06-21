@@ -149,7 +149,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   maxJumpDistance: 2.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   moving: 0
+  itemGrabbed: 0
 --- !u!1 &6273051009507121524
 GameObject:
   m_ObjectHideFlags: 0

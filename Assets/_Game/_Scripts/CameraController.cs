@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        targetPosition = player.transform.position + offset;
+        targetPosition = new Vector3 (player.transform.position.x, offset.y, offset.z);
         
         float halfWidth = Camera.main.orthographicSize * Camera.main.aspect;
 

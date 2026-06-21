@@ -4,18 +4,29 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    public float speed = 5f;
-    public float maxJumpDistance;
-    public bool moving;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float maxJumpDistance;
     
-    private Vector3 targetPosition;
-    private float currentHeightLevel = 0;
+    [Header("References")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private SurfaceManager surfaceManager;
+    
     [Header("Inventory")]
-    public bool itemGrabbed; //whether or not quinn is carrying an item atm.
+    public bool itemGrabbed; //whether quinn is carrying an item atm.
+    
+    private SpriteRenderer sr;
+    private Vector3 targetPosition;
+    private int currentHeightLevel = 0;
+    [HideInInspector] public bool moving;
+    
+    private bool pendingJump;
+    private Vector3 pendingJumpTarget;
+    private ClickableSurface pendingJumpSurface;
 
     void Start()
     {
         targetPosition = transform.position;
+        sr = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -26,40 +37,94 @@ public class PlayerController : MonoBehaviour
 
     private void HandleClick()
     {
-        // if no mouse input end function
-        if (!Input.GetMouseButtonDown(0)) return;
+        if (!Input.GetMouseButtonDown(0) || moving) return; // if no mouse input end function
         
-        // get position from mouse click
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get position from mouse click
         
-        // send raycast to position gotten from mouse click
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        ClickableSurface surface = surfaceManager.ResolveSurface(mousePos, preferLower: true);
 
-        // if nothing hit with a collision, end function
-        if (hit.collider == null) return;
-        
-        // non fully implemented yet, but set up for character facing direction
-        float direction = Mathf.Sign(mousePos.x - transform.position.x);
-        Vector2 rayOrigin = (Vector2)transform.position + Vector2.right * (direction * 0.5f);
-        
-        // see if object hit has this script, if not end function
-        ClickableSurface surface = hit.collider.GetComponent<ClickableSurface>();
         if (!surface) return;
         
-        targetPosition = new Vector3(hit.point.x, surface.surfaceY, transform.position.z);
-        
-        // if CanMoveTo returns true, set moving to true
-        if(CanMoveTo(surface))
+        FaceDirection(mousePos.x);
+
+        Vector3 destination = GetDestination(mousePos, surface);
+
+        ExecuteMovement(surface, destination);
+    }
+    
+    private Vector3 GetDestination(Vector2 mousePos, ClickableSurface surface)
+    {
+        Collider2D col = surface.GetComponent<Collider2D>();
+
+        Vector2 point = new Vector2(mousePos.x, col.bounds.max.y);
+
+        float halfHeight = sr.bounds.extents.y;
+
+        return new Vector3(point.x, point.y + halfHeight, transform.position.z);
+    }
+    
+    private void ExecuteMovement(ClickableSurface surface, Vector3 destination)
+    {
+        int diff = surface.heightLevel - currentHeightLevel;
+        float distance = Mathf.Abs(destination.x - transform.position.x);
+
+        bool isSameLevel = diff == 0;
+        bool isJumpUp = diff > 0;
+        bool isJumpDown = diff < 0;
+
+        if (isJumpUp)
+        {
+            bool canJumpNow = distance <= maxJumpDistance;
+
+            if (canJumpNow)
+            {
+                currentHeightLevel = surface.heightLevel;
+                StartCoroutine(JumpTo(destination));
+                return;
+            }
+
+            targetPosition = GetJumpApproachPoint(destination);
             moving = true;
 
-        // if CanJumpTo returns true, start coroutine for jumping
-        if(CanJumpTo(surface, targetPosition))
+            pendingJump = true;
+            pendingJumpTarget = destination;
+            pendingJumpSurface = surface;
+
+            return;
+        }
+
+        if (isJumpDown)
         {
+            bool directDrop = IsDirectDrop(destination);
+
+            if (directDrop)
+            {
+                currentHeightLevel = surface.heightLevel;
+                StartCoroutine(JumpTo(destination));
+                return;
+            }
+            
+            Vector3 landingPoint = GetClampedDropPoint(destination);
+
             currentHeightLevel = surface.heightLevel;
-            StartCoroutine(JumpTo(targetPosition));
+            StartCoroutine(JumpTo(landingPoint));
+
+            // AFTER jump completes, THEN continue walking
+            pendingJump = false; // IMPORTANT: disable auto chaining
+
+            targetPosition = destination; // final walk target
+            moving = true;
+
+            return;
+        }
+        
+        if (isSameLevel)
+        {
+            targetPosition = destination;
+            moving = true;
         }
     }
-
+    
     private void Move()
     {
         // if moving is false, end function
@@ -75,35 +140,16 @@ public class PlayerController : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
             moving = false;
+            
+            if (pendingJump)
+            {
+                pendingJump = false;
+
+                currentHeightLevel = pendingJumpSurface.heightLevel;
+
+                StartCoroutine(JumpTo(pendingJumpTarget));
+            }
         }
-    }
-
-    bool CanMoveTo(ClickableSurface targetSurface)
-    {
-        // compare height level to surface height level
-        float diff = targetSurface.heightLevel - currentHeightLevel;
-        
-        // if same level, set true
-        if (diff == 0) return true;
-        
-        return false;
-    }
-
-    bool CanJumpTo(ClickableSurface targetSurface, Vector3 target)
-    {
-        float diff = targetSurface.heightLevel - currentHeightLevel;
-
-        // horizontal distance to clicked point
-        float distance = Mathf.Abs(target.x - transform.position.x);
-        
-        // too far away
-        if (distance > maxJumpDistance)
-            return false;
-        
-        // if levels are different and not the same, return true
-        if ((diff <= 2 && diff > 0) || diff < 0) return true;
-
-        return false;
     }
 
     IEnumerator JumpTo(Vector3 target)
@@ -134,5 +180,79 @@ public class PlayerController : MonoBehaviour
 
         // makes sure character is in the right position after movement
         transform.position = target;
+    }
+    
+    private void FaceDirection(float mouseX)
+    {
+        float diff = mouseX - transform.position.x;
+
+        if (diff > 0.01f)
+            sr.flipX = false;
+        else if (diff < -0.01f)
+            sr.flipX = true;
+    }
+    
+    private Vector3 GetJumpApproachPoint(Vector3 target)
+    {
+        float direction = Mathf.Sign(target.x - transform.position.x);
+
+        return new Vector3(
+            target.x - direction * maxJumpDistance * 0.9f,
+            transform.position.y,
+            transform.position.z
+        );
+    }
+    
+    private Vector3 FindLedgePoint(Vector3 target)
+    {
+        float direction = Mathf.Sign(target.x - transform.position.x);
+
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y + 0.5f);
+
+        float step = 0.1f;
+        float maxCheckDistance = maxJumpDistance;
+
+        Vector2 lastValid = origin;
+
+        for (float x = 0; x <= maxCheckDistance; x += step)
+        {
+            Vector2 checkPos = origin + new Vector2(direction * x, 0);
+
+            RaycastHit2D hit = Physics2D.Raycast(
+                checkPos + Vector2.up * 1f,
+                Vector2.down,
+                3f,
+                groundLayer
+            );
+
+            if (!hit.collider) break;
+
+            lastValid = hit.point;
+        }
+
+        return new Vector3(lastValid.x, lastValid.y + sr.bounds.extents.y, transform.position.z);
+    }
+    
+    private bool IsDirectDrop(Vector3 target)
+    {
+        float xDistance = Mathf.Abs(target.x - transform.position.x);
+        float yDistance = transform.position.y - target.y;
+
+        // tweak these numbers to taste
+        return xDistance < 1.5f && yDistance > 0.5f;
+    }
+    
+    private Vector3 GetClampedDropPoint(Vector3 target)
+    {
+        float direction = Mathf.Sign(target.x - transform.position.x);
+
+        // clamp horizontal distance to jump range
+        float clampedX = transform.position.x + direction * maxJumpDistance;
+
+        return new Vector3(
+            clampedX,
+            target.y,
+            transform.position.z
+        );
     }
 }
