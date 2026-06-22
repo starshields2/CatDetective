@@ -24,7 +24,7 @@ public class NonPlayerCharacter : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            //StartTriggeredDialogue();
+            StartTriggeredDialogue();
         }
         if(other.tag == "Item")
         {

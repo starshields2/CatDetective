@@ -333,9 +333,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Room 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3730509099443707841, guid: d0f96e3056fd4884d9690946e659397f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3730509099443707870, guid: d0f96e3056fd4884d9690946e659397f, type: 3}
       propertyPath: m_Offset.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730509099732939256, guid: d0f96e3056fd4884d9690946e659397f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730509100252035464, guid: d0f96e3056fd4884d9690946e659397f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3730509100317166446, guid: d0f96e3056fd4884d9690946e659397f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4502193450778758757, guid: d0f96e3056fd4884d9690946e659397f, type: 3}
       propertyPath: exitPoint
