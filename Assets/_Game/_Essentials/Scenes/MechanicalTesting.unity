@@ -333,6 +333,7 @@ MonoBehaviour:
   leftBound: {fileID: 612991982}
   rightBound: {fileID: 632948096}
   offset: {x: 0, y: 3.5, z: -10}
+  followSpeed: 5
 --- !u!1 &1612063157
 GameObject:
   m_ObjectHideFlags: 0
