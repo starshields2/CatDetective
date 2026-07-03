@@ -35,10 +35,18 @@ public class NonPlayerCharacter : MonoBehaviour
         }
     }
 
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.tag == "Player")
+        {
+            _dialogue.ClearDialogue();
+        }
+    }
+
     void StartTriggeredDialogue()
     {
         Debug.Log("Triggering Dialogues");
-        _dialogue.NextLine();
+        _dialogue.InGameDialogue();
     }
 
     public IEnumerator StartItemCollection()
