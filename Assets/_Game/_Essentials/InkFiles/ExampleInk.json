@@ -1,0 +1,1 @@
+﻿{"inkVersion":21,"root":[["#","^Ward","/#","^It's me, Detective Ward.","\n","ev","str","^Next","/str","/ev",{"*":"0.c-0","flg":4},{"c-0":["\n","#","^Peter","/#","^AND ME PETER GRAY!!!","\n",["ev","str","^Next","/str","/ev",{"*":".^.c-0","flg":4},{"c-0":["\n","end",{"->":"0.g-0"},{"#f":5}]}],{"#f":5}],"g-0":["done",{"#f":5}]}],"done",{"#f":1}],"listDefs":{}}
