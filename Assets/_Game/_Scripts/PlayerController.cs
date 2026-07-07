@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private bool pendingJump;
     private Vector3 pendingJumpTarget;
     private ClickableSurface pendingJumpSurface;
-
+    private Interactable pendingInteractable;
+    
     void Start()
     {
         targetPosition = transform.position;
@@ -40,6 +41,18 @@ public class PlayerController : MonoBehaviour
         if (!Input.GetMouseButtonDown(0) || moving) return; // if no mouse input end function
         
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get position from mouse click
+
+        Collider2D hit = Physics2D.OverlapPoint(mousePos);
+        if (hit)
+        {
+            Interactable interactable = hit.GetComponent<Interactable>();
+
+            if (interactable != null)
+            {
+                HandleInteractable(interactable);
+                return;
+            }
+        }
         
         ClickableSurface surface = surfaceManager.ResolveSurface(mousePos, preferLower: true);
 
@@ -149,6 +162,12 @@ public class PlayerController : MonoBehaviour
 
                 StartCoroutine(JumpTo(pendingJumpTarget));
             }
+            
+            if (pendingInteractable != null)
+            {
+                pendingInteractable.Interact();
+                pendingInteractable = null;
+            }
         }
     }
 
@@ -254,5 +273,20 @@ public class PlayerController : MonoBehaviour
             target.y,
             transform.position.z
         );
+    }
+
+    void HandleInteractable(Interactable interactable)
+    {
+        float distance = Vector2.Distance(transform.position, interactable.transform.position);
+
+        if (distance <= 1f)
+        {
+            interactable.Interact();
+            return;
+        }
+        
+        pendingInteractable = interactable;
+        targetPosition = interactable.transform.position;
+        moving = true;
     }
 }

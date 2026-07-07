@@ -48,7 +48,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 33, y: 17, z: 12, w: 3}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -108,7 +108,7 @@ TextureImporter:
       name: tempCarWindow_0
       rect:
         serializedVersion: 2
-        x: 12
+        x: 33
         y: 17
         width: 19
         height: 12
@@ -119,29 +119,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 982333b95996aea4e835bd02724ffef7
-      internalID: 666408497
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: tempCarWindow_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 17
-        width: 20
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a3ea53e8b6b7b4141bcdcc1a5256096e
-      internalID: 87057985
+      spriteID: a153445e172c54c419b421aaddc4de64
+      internalID: -533245
       vertices: []
       indices: 
       edges: []
@@ -150,15 +129,14 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      tempCarWindow_0: 666408497
-      tempCarWindow_1: 87057985
+      tempCarWindow_0: -533245
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
