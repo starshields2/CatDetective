@@ -29,7 +29,7 @@ public class OverheadDialogueTemplate : MonoBehaviour {
 	}
 
 	// Creates a new Story object with the compiled story which we can then play!
-	void StartStory () {
+	public void StartStory () {
 		story = new Story (inkJSONAsset.text);
 		inventoryCanvas.alpha = 0;
         if(OnCreateStory != null) OnCreateStory(story);
@@ -176,7 +176,7 @@ public class OverheadDialogueTemplate : MonoBehaviour {
 	}
 
 	[SerializeField]
-	private TextAsset inkJSONAsset = null;
+	public TextAsset inkJSONAsset = null;
 	public Story story;
 
 	[SerializeField]
