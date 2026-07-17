@@ -7,8 +7,11 @@ public class Dialogue : MonoBehaviour
 {
     //public PlayerController _conrol;
     public TextMeshPro _inGameText;
-    public TextMeshProUGUI textComponent;
+    public TextMeshPro textComponent;
+    public TextMeshProUGUI textComponentUI;
     public TextMeshProUGUI speakerName;
+
+    public GameObject speechBubble;
     public bool textStart;
     public string unitName;
     public string[] lines;
@@ -99,6 +102,17 @@ public class Dialogue : MonoBehaviour
         //index+=1;
     }
 
+    public void ClearDialogue()
+    {
+        StartCoroutine(ClearDialogueBubble());
+    }
+
+    IEnumerator ClearDialogueBubble()
+    {
+        yield return new WaitForSeconds(2f);
+        speechBubble.SetActive(false);
+    }
+
    public void NextLine()
     {
         if(index < lines.Length)
@@ -113,6 +127,18 @@ public class Dialogue : MonoBehaviour
             textComponent.text = "Error: NO MORE LINES!";
         }
         index += 1;
+    }
+
+    public void InGameDialogue()
+    {
+        StartCoroutine(DisplayInGameDialogue());
+    }
+
+    public IEnumerator DisplayInGameDialogue()
+    {
+        speechBubble.SetActive(true);
+        NextLine();
+        yield return new WaitForSeconds(3f);
     }
 
     [ContextMenu("Handle Overworld Dialogue")]
