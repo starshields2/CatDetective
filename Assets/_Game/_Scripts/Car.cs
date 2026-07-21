@@ -12,9 +12,9 @@ public class Car : MonoBehaviour, Interactable.IActionInteractable
 
     [Header("References")]
     [SerializeField] private Transform carTransform;
-    [SerializeField] private Transform player;
-    [SerializeField] private SpriteRenderer playerRenderer;
+    [SerializeField] private GameObject player;
     [SerializeField] private Transform exitPoint;
+    [SerializeField] private Interactable interactable;
 
     [Header("Jump Settings")]
     [SerializeField] private float jumpHeight = 1f;
@@ -32,6 +32,17 @@ public class Car : MonoBehaviour, Interactable.IActionInteractable
     public CarState currentState = CarState.CatInside;
     
     public bool windowOpen;
+
+    private PlayerController playerController;
+    private SpriteRenderer playerRenderer;
+
+    void Awake()
+    {
+        playerController = player.GetComponent<PlayerController>();
+        playerRenderer = player.GetComponent<SpriteRenderer>();
+        playerRenderer.enabled = false;
+        playerController.currentlyInsideCar = true;
+    }
     
     public void PerformAction()
     {
@@ -79,13 +90,12 @@ public class Car : MonoBehaviour, Interactable.IActionInteractable
     {
         yield return new WaitForSeconds(.15f);
 
-        player.gameObject.SetActive(true);
+        playerRenderer.enabled = true;
 
-        player.position = carTransform.position;
+        player.transform.position = carTransform.position;
 
-        playerRenderer.sortingOrder = behindCar;
 
-        Vector3 start = player.position;
+        Vector3 start = player.transform.position;
         Vector3 end = exitPoint.position;
 
         float timer = 0;
@@ -100,15 +110,19 @@ public class Car : MonoBehaviour, Interactable.IActionInteractable
 
             pos.y += Mathf.Sin(t * Mathf.PI) * jumpHeight;
 
-            player.position = pos;
+            player.transform.position = pos;
 
             yield return null;
         }
 
-        player.position = end;
+        player.transform.position = end;
 
         playerRenderer.sortingOrder = aboveCar;
+        
+        playerController.currentlyInsideCar = false;
 
+        interactable.canInteract = false;
+        
         currentState = CarState.CatOut;
     }
 }

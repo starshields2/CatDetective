@@ -17,6 +17,8 @@ public class CarWindow : MonoBehaviour, Interactable.IActionInteractable
             return;
 
         StartCoroutine(OpenWindow());
+        
+        GetComponent<Interactable>().enabled = false;
     }
 
     IEnumerator OpenWindow()

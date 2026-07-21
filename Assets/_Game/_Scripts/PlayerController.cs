@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private ClickableSurface pendingJumpSurface;
     private Interactable pendingInteractable;
     
+    [HideInInspector] public bool currentlyInsideCar;
+    
     void Start()
     {
         targetPosition = transform.position;
@@ -53,6 +55,8 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
+
+        if (currentlyInsideCar) return;
         
         ClickableSurface surface = surfaceManager.ResolveSurface(mousePos, preferLower: true);
 

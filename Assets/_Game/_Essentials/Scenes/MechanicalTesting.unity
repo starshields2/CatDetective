@@ -359,9 +359,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carTransform: {fileID: 1516603729}
-  player: {fileID: 2106947163}
-  playerRenderer: {fileID: 2106947162}
+  player: {fileID: 2106947158}
   exitPoint: {fileID: 1978786433}
+  interactable: {fileID: 1516603732}
   jumpHeight: 1
   jumpDuration: 0.5
   behindCar: 1
@@ -996,15 +996,5 @@ Transform:
 --- !u!1 &2106947158 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6273051009059693154, guid: a5ce28b916c646246937cdb1547bba58, type: 3}
-  m_PrefabInstance: {fileID: 1716499725}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &2106947162 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6273051009059693159, guid: a5ce28b916c646246937cdb1547bba58, type: 3}
-  m_PrefabInstance: {fileID: 1716499725}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2106947163 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6273051009059693156, guid: a5ce28b916c646246937cdb1547bba58, type: 3}
   m_PrefabInstance: {fileID: 1716499725}
   m_PrefabAsset: {fileID: 0}
