@@ -9,12 +9,46 @@ public class Interactable : MonoBehaviour
     
     [Header("General")]
     public InteractableType interactableType;
-
-    public bool isKeyItem;
-
     public GameObject actionReference;
     public bool canInteract = true;
+    public bool isKeyItem;
+    
+    [Header("On Hover")]
+    [Tooltip("Put in a prefab with empty Sprite Renderer on it")] 
+    [SerializeField] private GameObject hoverObject;
+    [SerializeField] private Sprite hoverSprite;
+    private GameObject hoverInstance;
 
+    [Header("Interaction")] [SerializeField]
+    private Transform interactablePoint;
+
+    public GameObject player;
+    public PlayerController playerController;
+
+    void Awake()
+    {
+        
+        playerController = FindObjectOfType<PlayerController>();
+    }
+    
+    private void OnMouseEnter()
+    {
+        HoverInteract();
+    }
+
+    private void OnMouseExit()
+    {
+        UnhoverInteract();
+    }
+
+    public Vector3 GetInteractionPoint()
+    {
+        if (interactablePoint)
+            return interactablePoint.position;
+        
+        return transform.position;
+    }
+    
     public void Interact()
     {
         if (!canInteract) return;
@@ -68,5 +102,25 @@ public class Interactable : MonoBehaviour
     public interface ISequenceListener
     {
         void SequenceTriggered();
+    }
+
+    public void HoverInteract()
+    {
+        if (!canInteract) return;
+        if (!hoverObject || !hoverSprite) return;
+        
+        hoverInstance = Instantiate(hoverObject, transform.position, Quaternion.identity);
+        SpriteRenderer hoverRenderer = hoverInstance.GetComponent<SpriteRenderer>();
+        hoverRenderer.sprite = hoverSprite;
+        hoverRenderer.sortingOrder = actionReference.GetComponent<SpriteRenderer>().sortingOrder-1;
+    }
+
+    public void UnhoverInteract()
+    {
+        if(!hoverInstance) return;
+        
+        Destroy(hoverInstance);
+        
+        hoverInstance = null;
     }
 }

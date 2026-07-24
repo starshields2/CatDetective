@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Car : MonoBehaviour, Interactable.IActionInteractable
+public class Car : BaseInteractable, Interactable.IActionInteractable
 {
     public enum CarState
     {
@@ -12,16 +12,14 @@ public class Car : MonoBehaviour, Interactable.IActionInteractable
 
     [Header("References")]
     [SerializeField] private Transform carTransform;
-    [SerializeField] private GameObject player;
     [SerializeField] private Transform exitPoint;
-    [SerializeField] private Interactable interactable;
 
     [Header("Jump Settings")]
     [SerializeField] private float jumpHeight = 1f;
     [SerializeField] private float jumpDuration = 0.5f;
 
     [Header("Sorting Orders")]
-    [SerializeField] private int behindCar = 1;
+    //[SerializeField] private int behindCar = 1;
     [SerializeField] private int aboveCar = 10;
 
     [Header("Shake")]
@@ -33,13 +31,8 @@ public class Car : MonoBehaviour, Interactable.IActionInteractable
     
     public bool windowOpen;
 
-    private PlayerController playerController;
-    private SpriteRenderer playerRenderer;
-
-    void Awake()
+    void Start()
     {
-        playerController = player.GetComponent<PlayerController>();
-        playerRenderer = player.GetComponent<SpriteRenderer>();
         playerRenderer.enabled = false;
         playerController.currentlyInsideCar = true;
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class CarWindow : MonoBehaviour, Interactable.IActionInteractable
+public class CarWindow : BaseInteractable, Interactable.IActionInteractable
 {
     [SerializeField] private Transform window;
     [SerializeField] private Car car;
@@ -9,8 +9,9 @@ public class CarWindow : MonoBehaviour, Interactable.IActionInteractable
     [Header("Animation")]
     [SerializeField] private float rollDistance = .75f;
     [SerializeField] private float rollDuration = .5f;
-
+    
     private bool opened;
+
     public void PerformAction()
     {
         if (opened)
@@ -33,6 +34,7 @@ public class CarWindow : MonoBehaviour, Interactable.IActionInteractable
 
         // Tell the car the cat can escape
         car.WindowOpened();
+        interactable.canInteract = false;
     }
     
     IEnumerator RollWindow()
@@ -54,7 +56,7 @@ public class CarWindow : MonoBehaviour, Interactable.IActionInteractable
 
             yield return null;
         }
-
+        
         window.localPosition = end;
     }
 }

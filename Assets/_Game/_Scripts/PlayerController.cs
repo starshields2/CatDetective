@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     
     [Header("Inventory")]
     public bool itemGrabbed; //whether quinn is carrying an item atm.
+
+    public bool interacting;
     
     private SpriteRenderer sr;
     private Vector3 targetPosition;
@@ -34,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (interacting) return;
+        
         HandleClick();
         Move();
     }
@@ -49,7 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             Interactable interactable = hit.GetComponent<Interactable>();
 
-            if (interactable != null)
+            if (interactable)
             {
                 HandleInteractable(interactable);
                 return;
@@ -226,36 +230,6 @@ public class PlayerController : MonoBehaviour
         );
     }
     
-    private Vector3 FindLedgePoint(Vector3 target)
-    {
-        float direction = Mathf.Sign(target.x - transform.position.x);
-
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y + 0.5f);
-
-        float step = 0.1f;
-        float maxCheckDistance = maxJumpDistance;
-
-        Vector2 lastValid = origin;
-
-        for (float x = 0; x <= maxCheckDistance; x += step)
-        {
-            Vector2 checkPos = origin + new Vector2(direction * x, 0);
-
-            RaycastHit2D hit = Physics2D.Raycast(
-                checkPos + Vector2.up * 1f,
-                Vector2.down,
-                3f,
-                groundLayer
-            );
-
-            if (!hit.collider) break;
-
-            lastValid = hit.point;
-        }
-
-        return new Vector3(lastValid.x, lastValid.y + sr.bounds.extents.y, transform.position.z);
-    }
-    
     private bool IsDirectDrop(Vector3 target)
     {
         float xDistance = Mathf.Abs(target.x - transform.position.x);
@@ -281,6 +255,15 @@ public class PlayerController : MonoBehaviour
 
     void HandleInteractable(Interactable interactable)
     {
+        if (!interactable.canInteract) return;
+        
+        if (currentlyInsideCar)
+        {
+            // Only allow interactions, never movement.
+            interactable.Interact();
+            return;
+        }
+        
         float distance = Vector2.Distance(transform.position, interactable.transform.position);
 
         if (distance <= 1f)
@@ -290,7 +273,9 @@ public class PlayerController : MonoBehaviour
         }
         
         pendingInteractable = interactable;
-        targetPosition = interactable.transform.position;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get position from mouse click
+        FaceDirection(mousePos.x);
+        targetPosition = interactable.GetInteractionPoint();
         moving = true;
     }
 }

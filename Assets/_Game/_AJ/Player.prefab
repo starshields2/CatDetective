@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9d1a2bbda2fe18e4296ed37fdce95c29, type: 3}
   m_Color: {r: 0, g: 0.9033842, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -152,8 +152,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  moving: 0
+  surfaceManager: {fileID: 0}
   itemGrabbed: 0
+  moving: 0
+  currentlyInsideCar: 0
 --- !u!1 &6273051009507121524
 GameObject:
   m_ObjectHideFlags: 0

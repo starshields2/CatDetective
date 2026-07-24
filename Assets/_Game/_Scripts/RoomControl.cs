@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 
 public class RoomControl : MonoBehaviour
@@ -9,16 +9,13 @@ public class RoomControl : MonoBehaviour
     // Start is called before the first frame update
     [Header("Room Details")]
     public Room[] rooms;
-    
-    public int changeRoomID;
-    public Transform _mainCamTransform;
 
     [Header("Crossfade")]
-    public GameObject crossfader;
-    public Animation xFade;
+    [SerializeField] private Crossfade crossfader;
 
     private GameObject player;
     private PlayerController playerController;
+    private CameraController cameraController;
 
     void Start()
     {
@@ -27,12 +24,20 @@ public class RoomControl : MonoBehaviour
         // get player references
         player = GameObject.Find("Player");
         playerController = player.GetComponent<PlayerController>();
+        cameraController = Camera.main.GetComponent<CameraController>();
     }
 
     public void EnterRoom(int roomID, Transform exitPoint)
     {
         // if exitPoint doesn't exist stop function
         if (!exitPoint) return;
+
+        StartCoroutine(ChangeRoom(roomID, exitPoint));
+    }
+
+    private IEnumerator ChangeRoom(int roomID, Transform exitPoint)
+    {
+        yield return StartCoroutine(crossfader.FadeOut());
         
         // stop player movement upon entering a door
         playerController.moving = false;
@@ -50,15 +55,22 @@ public class RoomControl : MonoBehaviour
             }
         }
         
-        // if target room doesn't match any ID's, stop function
-        if (!targetRoom)
+        if(!targetRoom)
         {
             Debug.LogError("No room found with ID: " + roomID);
-            return;
+            yield break;
         }
         
         // teleport player to next destination
-        _mainCamTransform.position = targetRoom.camPosition.position;
         player.transform.position = exitPoint.position;
+
+        cameraController.leftBound = targetRoom.leftBound;
+        cameraController.rightBound = targetRoom.rightBound;
+        
+        cameraController.SnapToPlayer();
+
+        yield return new WaitForSeconds(0.1f);
+        
+        yield return StartCoroutine(crossfader.FadeIn());
     }
 }
