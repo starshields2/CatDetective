@@ -20,17 +20,14 @@ public class GeneralGameManager : MonoBehaviour
     {
         
     }
-    [ContextMenu("Load Overhead")]
+   
     public void LoadOverheadDialogue()
     {
-        //set the canvas active
-        _inkCanvas.alpha = 1;
-        _dialogueTemplate.inkJSONAsset = _storyAsset[storyAssetIndex];
-        _dialogueTemplate.StartStory();
+      
     }
 
     public void UnloadOverheadDialogue()
     {
-        _inkCanvas.alpha = 0;
+        
     }
 }

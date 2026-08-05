@@ -134,7 +134,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9146e2d497463bf4cba4baac2d01bb40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _caseManager: {fileID: 0}
   _itemData: {fileID: 11400000, guid: 51b383ba97d0b3c438b71a50ac618adf, type: 2}
   _DisplayIcon: {fileID: 2781396170815891895}
   _inventoryButton: {fileID: 0}
   isKeyItem: 1
+  _associatedDialogue: {fileID: 4900000, guid: e296f592f72ae9b449385c732d017ce6, type: 3}

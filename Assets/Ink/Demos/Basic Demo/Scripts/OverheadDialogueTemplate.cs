@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+//to do: activate with items
+//activate when interacting with characters
+//activate when walking into trigger
+//disable player mouse input while dialogue is active (so that they can click through dialogue). 
+
 // This is a super bare bones example of how to play and display a ink story in Unity.
 public class OverheadDialogueTemplate : MonoBehaviour {
     public static event Action<Story> OnCreateStory;
@@ -28,9 +33,18 @@ public class OverheadDialogueTemplate : MonoBehaviour {
 		
 	}
 
+	public void LoadStory()
+    {
+		Debug.Log("Loading Story...");
+		currentStory = null;
+		currentStory = preloadedStory;
+		StartStory();
+    }
+
 	// Creates a new Story object with the compiled story which we can then play!
 	public void StartStory () {
-		story = new Story (inkJSONAsset.text);
+		thisCanvas.alpha = 1;
+		story = new Story (currentStory.text);
 		inventoryCanvas.alpha = 0;
         if(OnCreateStory != null) OnCreateStory(story);
 		RefreshView();
@@ -96,6 +110,8 @@ public class OverheadDialogueTemplate : MonoBehaviour {
     {
 		thisCanvas.alpha = 0;
 		thisCanvas.interactable = false;
+		inventoryCanvas.alpha = 1;
+		inventoryCanvas.interactable = true;
     }
 
 	// When we click the choice button, tell the story to choose that choice!
@@ -176,7 +192,8 @@ public class OverheadDialogueTemplate : MonoBehaviour {
 	}
 
 	[SerializeField]
-	public TextAsset inkJSONAsset = null;
+	public TextAsset currentStory = null;
+	public TextAsset preloadedStory = null;
 	public Story story;
 
 	[SerializeField]

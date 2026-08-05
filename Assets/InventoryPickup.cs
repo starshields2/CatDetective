@@ -13,7 +13,7 @@ public class InventoryPickup : MonoBehaviour
 
     public ItemType _itemType = ItemType.Action;
     public CaseManager _caseManager;
-    public GameObject _itemData; // what item prefab is it.
+    public GameObject _itemDataGameObject; // what item prefab is it.
     public string _dedicatedLine; //what peter will say when quinn gives him the item.
     public bool inRangeOfPlayer; //are we in range of the player? y/n
     public Transform playerAttchPoint; //where does it go when we grab it?

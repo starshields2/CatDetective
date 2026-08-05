@@ -15,4 +15,5 @@ public class Item : ScriptableObject
     public Sprite icon;
     public string description;
     public string dialogueLine;
+    
 }

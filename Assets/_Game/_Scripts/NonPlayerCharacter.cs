@@ -5,6 +5,7 @@ using UnityEngine;
 public class NonPlayerCharacter : MonoBehaviour
 {
     public Dialogue _dialogue;
+    public OverheadDialogueTemplate _overheadDialogue;
     public Inventory _inventorySystem;
     public GameObject ItemPickedUp;
     public PlayerController _playerController;
@@ -52,9 +53,16 @@ public class NonPlayerCharacter : MonoBehaviour
     public IEnumerator StartItemCollection()
     {
         InventoryPickup _itemInfo = ItemPickedUp.GetComponent<InventoryPickup>();
-        _inventorySystem.ItemTemplate = _itemInfo._itemData;
-        
-        _dialogue.itemDialogue = _itemInfo._dedicatedLine;
+       
+        _inventorySystem.ItemTemplate = _itemInfo._itemDataGameObject;
+        GameObject itemFromPickup = _itemInfo._itemDataGameObject;
+
+        InventoryItem inventoryData = itemFromPickup.GetComponent<InventoryItem>();
+
+        TextAsset newStory;
+        newStory = inventoryData._associatedDialogue;
+        _overheadDialogue.preloadedStory = newStory;
+
         _inventorySystem.AddToInventory();
        
         
@@ -73,7 +81,7 @@ public class NonPlayerCharacter : MonoBehaviour
 
     void StartPlayItemDialogue()
     {
-        _dialogue.PlayItemDialogue();
+        _overheadDialogue.LoadStory();
         
     }
 }

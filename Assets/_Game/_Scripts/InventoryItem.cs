@@ -10,6 +10,9 @@ public class InventoryItem : MonoBehaviour
     public Image _DisplayIcon;
     [SerializeField] private Button _inventoryButton;
     public bool isKeyItem;
+    public TextAsset _associatedDialogue;
+
+    //add a check for associated dialogue to see if it is null?
 
     // Start is called before the first frame update
     void Start()
