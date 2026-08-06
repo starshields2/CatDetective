@@ -19,16 +19,21 @@ public class Interactable : MonoBehaviour
     [SerializeField] private Sprite hoverSprite;
     private GameObject hoverInstance;
 
-    [Header("Interaction")] [SerializeField]
-    private Transform interactablePoint;
+    [Header("Interaction")]
+    [SerializeField] private Transform interactablePoint;
+    [SerializeField] private float interactionRange = 2;
+    private SurfaceManager surfaceManager;
+    public float InteractionRange => interactionRange;
 
-    public GameObject player;
-    public PlayerController playerController;
+    [HideInInspector] public GameObject player;
+    [HideInInspector] public PlayerController playerController;
 
     void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         
-        playerController = FindObjectOfType<PlayerController>();
+        surfaceManager = FindObjectOfType<SurfaceManager>();
     }
     
     private void OnMouseEnter()
@@ -41,12 +46,30 @@ public class Interactable : MonoBehaviour
         UnhoverInteract();
     }
 
-    public Vector3 GetInteractionPoint()
+    public Vector3 GetInteractionPoint(Transform player)
     {
-        if (interactablePoint)
-            return interactablePoint.position;
-        
-        return transform.position;
+        Vector3 target;
+        if (!interactablePoint) { target = transform.position; }
+        else { target = interactablePoint.position; }
+
+        // Find which surface this object is standing on
+        ClickableSurface surface = surfaceManager.ResolveSurface(target, true);
+
+        if (surface)
+        {
+            Collider2D groundCol = surface.GetComponent<Collider2D>();
+
+            // Stand on top of the ground
+            target.y = groundCol.bounds.max.y;
+
+            // Add half the player's height so their feet are on the ground
+            SpriteRenderer playerRenderer = player.GetComponent<SpriteRenderer>();
+            target.y += playerRenderer.bounds.extents.y;
+        }
+
+        Vector3 direction = (target - player.position).normalized;
+
+        return target - direction * interactionRange;
     }
     
     public void Interact()

@@ -3,7 +3,13 @@ guid: dd4c4aca9b5e32d4b82ef70dcfa61c15
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - actionReference: {instanceID: 0}
+  - hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
+  - hoverSprite: {instanceID: 0}
+  - interactablePoint: {instanceID: 0}
+  - player: {instanceID: 0}
+  - playerController: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

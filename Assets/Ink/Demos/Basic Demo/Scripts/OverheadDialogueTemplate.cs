@@ -9,7 +9,7 @@ using TMPro;
 //activate when walking into trigger
 //disable player mouse input while dialogue is active (so that they can click through dialogue). 
 
-// This is a super bare bones example of how to play and display a ink story in Unity.
+// This is a super bare-bones example of how to play and display a ink story in Unity.
 public class OverheadDialogueTemplate : MonoBehaviour {
     public static event Action<Story> OnCreateStory;
 	public static bool IsDialogueActive { get; private set; }
@@ -28,7 +28,7 @@ public class OverheadDialogueTemplate : MonoBehaviour {
         }
         else
         {
-			this.gameObject.SetActive(false);
+			gameObject.SetActive(false);
         }
 		
 	}
@@ -42,7 +42,9 @@ public class OverheadDialogueTemplate : MonoBehaviour {
     }
 
 	// Creates a new Story object with the compiled story which we can then play!
-	public void StartStory () {
+	public void StartStory ()
+	{
+		if (!currentStory) return;
 		thisCanvas.alpha = 1;
 		story = new Story (currentStory.text);
 		inventoryCanvas.alpha = 0;
@@ -120,7 +122,7 @@ public class OverheadDialogueTemplate : MonoBehaviour {
 		RefreshView();
 	}
 
-	// Creates a textbox showing the the line of text
+	// Creates a textbox showing the line of text
 	void CreateContentView (string text, GameObject container) {
 		TextMeshProUGUI storyText = Instantiate (textPrefab) as TextMeshProUGUI;
 		storyText.text = text;
