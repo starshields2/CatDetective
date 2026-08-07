@@ -28,7 +28,7 @@ public class OverheadDialogueTemplate : MonoBehaviour {
         }
         else
         {
-			this.gameObject.SetActive(false);
+			//this.gameObject.SetActive(false);
         }
 		
 	}

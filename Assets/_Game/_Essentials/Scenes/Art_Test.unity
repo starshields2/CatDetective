@@ -222,6 +222,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1787651296}
     - target: {fileID: 3623270034414783296, guid: 3644787a0c4a968409d601c6b06c0528, type: 3}
+      propertyPath: inRangeOfPlayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3623270034414783296, guid: 3644787a0c4a968409d601c6b06c0528, type: 3}
       propertyPath: playerAttchPoint
       value: 
       objectReference: {fileID: 410931156}
@@ -1562,6 +1566,10 @@ PrefabInstance:
       propertyPath: currentStory
       value: 
       objectReference: {fileID: 4900000, guid: 1a70664309963844f81f3458360afea4, type: 3}
+    - target: {fileID: 3245471505283045780, guid: 19d4a963efe7b4f489ade365b9483824, type: 3}
+      propertyPath: preloadedStory
+      value: 
+      objectReference: {fileID: 4900000, guid: e296f592f72ae9b449385c732d017ce6, type: 3}
     - target: {fileID: 5328830002747561289, guid: 19d4a963efe7b4f489ade365b9483824, type: 3}
       propertyPath: m_Alpha
       value: 1
