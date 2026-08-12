@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6295675683023460007}
   - component: {fileID: 6295675683023460008}
   m_Layer: 0
-  m_Name: PF_UI_Component
+  m_Name: PF_UI_Component - Copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

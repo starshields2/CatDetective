@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 6640569769523632362}
   - component: {fileID: 1225704732610405775}
   m_Layer: 0
-  m_Name: DialoguePanel
+  m_Name: DialoguePanel - Copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
