@@ -266,7 +266,7 @@ public class PlayerController : MonoBehaviour
         
         float distance = Vector2.Distance(transform.position, interactable.transform.position);
 
-        if (distance <= 1f)
+        if (distance <= interactable.InteractionRange)
         {
             interactable.Interact();
             return;
@@ -275,7 +275,8 @@ public class PlayerController : MonoBehaviour
         pendingInteractable = interactable;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get position from mouse click
         FaceDirection(mousePos.x);
-        targetPosition = interactable.GetInteractionPoint();
+        targetPosition = interactable.GetInteractionPoint(transform);
+        
         moving = true;
     }
 }
