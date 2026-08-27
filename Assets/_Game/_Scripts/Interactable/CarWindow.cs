@@ -8,7 +8,10 @@ public class CarWindow : BaseInteractable, Interactable.IActionInteractable
 
     [Header("Animation")]
     [SerializeField] private float rollDistance = .75f;
-    [SerializeField] private float rollDuration = .5f;
+    [SerializeField] private float rollDuration = 2f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip windowDown;
     
     private bool opened;
 
@@ -27,8 +30,10 @@ public class CarWindow : BaseInteractable, Interactable.IActionInteractable
         opened = true;
 
         // Play unlock sound
+        if(am)
+            am.PlaySFX(windowDown);
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.7f);
 
         yield return StartCoroutine(RollWindow());
 

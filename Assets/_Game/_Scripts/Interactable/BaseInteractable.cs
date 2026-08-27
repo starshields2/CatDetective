@@ -6,6 +6,7 @@ public abstract class BaseInteractable : MonoBehaviour
     protected GameObject player;
     protected PlayerController playerController;
     protected SpriteRenderer playerRenderer;
+    protected AudioManager am;
 
     protected virtual void Awake()
     {
@@ -13,6 +14,7 @@ public abstract class BaseInteractable : MonoBehaviour
         player = GameObject.Find("Player");
         playerController = player.GetComponent<PlayerController>();
         playerRenderer = player.GetComponent<SpriteRenderer>();
+        am = FindObjectOfType<AudioManager>();
     }
 
     protected void IsInteracting()

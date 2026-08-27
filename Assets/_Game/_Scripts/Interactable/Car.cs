@@ -26,9 +26,10 @@ public class Car : BaseInteractable, Interactable.IActionInteractable
     [SerializeField] private float shakeDuration;
     [SerializeField] private float shakeAngle;      // Degrees
     [SerializeField] private float shakeSpeed;     // Higher = faster wobble
+    [SerializeField] private AudioClip shakeSound;
     
+    [Header("Car State")]
     public CarState currentState = CarState.CatInside;
-    
     public bool windowOpen;
 
     void Start()
@@ -46,7 +47,8 @@ public class Car : BaseInteractable, Interactable.IActionInteractable
 
     IEnumerator ShakeCar()
     {
-        Quaternion startRotation = carTransform.rotation;
+        if(am)
+            am.PlaySFX(shakeSound);
 
         float timer = 0f;
 
@@ -62,7 +64,7 @@ public class Car : BaseInteractable, Interactable.IActionInteractable
             yield return null;
         }
 
-        carTransform.rotation = startRotation;
+        carTransform.rotation = Quaternion.Euler(0f, 0f, 0f);
     }
     
     public void WindowOpened()
