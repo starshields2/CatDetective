@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private SurfaceManager surfaceManager;
+    [SerializeField] private Animator playerAnim;
     
     [Header("Inventory")]
     public bool itemGrabbed; //whether quinn is carrying an item atm.
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         targetPosition = transform.position;
         sr = GetComponent<SpriteRenderer>();
+        playerAnim = GetComponent<Animator>();
     }
 
     void Update()
@@ -40,6 +42,11 @@ public class PlayerController : MonoBehaviour
         
         HandleClick();
         Move();
+
+             if (!moving)
+        {
+            playerAnim.SetBool("isRunning", false);
+        }
     }
 
     private void HandleClick()
@@ -112,6 +119,7 @@ public class PlayerController : MonoBehaviour
             pendingJumpSurface = surface;
 
             return;
+            
         }
 
         if (isJumpDown)
@@ -149,6 +157,7 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         // if moving is false, end function
+        playerAnim.SetBool("isRunning", true);
         if (!moving) return;
         
         transform.position = Vector3.MoveTowards(
@@ -177,6 +186,8 @@ public class PlayerController : MonoBehaviour
                 pendingInteractable = null;
             }
         }
+
+   
     }
 
     IEnumerator JumpTo(Vector3 target)
