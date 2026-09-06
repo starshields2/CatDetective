@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         HandleClick();
         Move();
 
-             if (!moving)
+        if (!moving)
         {
             playerAnim.SetBool("isRunning", false);
         }
@@ -157,8 +157,9 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         // if moving is false, end function
-        playerAnim.SetBool("isRunning", true);
         if (!moving) return;
+        
+        playerAnim.SetBool("isRunning", true);
         
         transform.position = Vector3.MoveTowards(
             transform.position,
