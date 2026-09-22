@@ -33,6 +33,11 @@ public class OverheadDialogueTemplate : MonoBehaviour {
 		
 	}
 
+	public void PreloadStory()
+    {
+
+    }
+
 	public void LoadStory()
     {
 		Debug.Log("Loading Story...");
