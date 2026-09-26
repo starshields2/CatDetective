@@ -188,6 +188,9 @@ public class OverheadDialogueTemplate : MonoBehaviour {
 
 	public void AdvanceDialogue()
 	{
+		if(!story)
+			return;
+		
 		Debug.Log("advancing.");
 		if (story.currentChoices.Count > 0)
 		{

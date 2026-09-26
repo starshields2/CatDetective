@@ -10,13 +10,13 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private SurfaceManager surfaceManager;
-    [SerializeField] private Animator playerAnim;
     
     [Header("Inventory")]
     public bool itemGrabbed; //whether quinn is carrying an item atm.
 
     public bool interacting;
     
+    private Animator playerAnim;
     private SpriteRenderer sr;
     private Vector3 targetPosition;
     private int currentHeightLevel = 0;

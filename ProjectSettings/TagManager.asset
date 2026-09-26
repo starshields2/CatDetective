@@ -48,3 +48,6 @@ TagManager:
   - name: Foreground
     uniqueID: 2220751939
     locked: 0
+  - name: Hover
+    uniqueID: 71753871
+    locked: 0

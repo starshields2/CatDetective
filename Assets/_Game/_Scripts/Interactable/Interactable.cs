@@ -132,7 +132,7 @@ public class Interactable : MonoBehaviour
         if (!canInteract) return;
         if (!hoverObject || !hoverSprite) return;
         
-        hoverInstance = Instantiate(hoverObject, transform.position, Quaternion.identity);
+        hoverInstance = Instantiate(hoverObject, transform.position, transform.rotation);
         SpriteRenderer hoverRenderer = hoverInstance.GetComponent<SpriteRenderer>();
         hoverRenderer.sprite = hoverSprite;
         hoverRenderer.sortingOrder = actionReference.GetComponent<SpriteRenderer>().sortingOrder-1;
