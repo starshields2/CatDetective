@@ -15,7 +15,6 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
     [SerializeField] private float catMoveDuration = 0.35f;
 
     private bool isOpen;
-    private bool catInside;
     private bool isMoving;
 
     protected override void Awake()
@@ -24,7 +23,8 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
         
         sr = GetComponent<SpriteRenderer>();
         
-        sr.sprite = closedSprite;
+        sr.sprite = openSprite;
+        isOpen = true;
     }
     
     public void PerformAction()
@@ -42,38 +42,35 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
         }
     }
 
-    private IEnumerator OpenCabinet()
-    {
-        isMoving = true;
-
-        // Open cabinet
-        sr.sprite = openSprite;
-
-        yield return null;
-
-        // Cat goes inside
-        yield return StartCoroutine(MoveCat(player.transform.position, catInsidePoint.position));
-        playerRenderer.sortingLayerName = "Default";
-
-        catInside = true;
-        isOpen = true;
-        isMoving = false;
-    }
-
     private IEnumerator CloseCabinet()
     {
         isMoving = true;
 
-        // Cat comes out first
+        // Open cabinet
+        sr.sprite = closedSprite;
+
+        yield return null;
+
+        // Cat comes out
         playerRenderer.sortingLayerName = "Foreground";
         yield return StartCoroutine(MoveCat(player.transform.position, catOutsidePoint.position));
 
-        catInside = false;
+        isOpen = false;
+        isMoving = false;
+    }
+
+    private IEnumerator OpenCabinet()
+    {
+        isMoving = true;
+
+        // Cat goes in
+        yield return StartCoroutine(MoveCat(player.transform.position, catInsidePoint.position));
+        playerRenderer.sortingLayerName = "Default";
 
         // Then close cabinet
-        sr.sprite = closedSprite;
+        sr.sprite = openSprite;
 
-        isOpen = false;
+        isOpen = true;
         isMoving = false;
     }
 
