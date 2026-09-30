@@ -6,9 +6,12 @@ public class NonPlayerCharacter : MonoBehaviour
 {
     public Dialogue _dialogue;
     public OverheadDialogueTemplate _overheadDialogue;
+    public GeneralGameManager generalGameManager;
     public Inventory _inventorySystem;
     public GameObject ItemPickedUp;
     public PlayerController _playerController;
+    public int storyIndex; //feed this into overhead dialogue template so it knows which story to load. 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +50,13 @@ public class NonPlayerCharacter : MonoBehaviour
     void StartTriggeredDialogue()
     {
         Debug.Log("Triggering Dialogues");
-        _dialogue.InGameDialogue();
+        TriggerOverhead();
+    }
+
+    void TriggerOverhead()
+    {
+        _overheadDialogue.preloadedStory = generalGameManager._storyAsset[storyIndex];
+        _overheadDialogue.LoadStory();
     }
 
     public IEnumerator StartItemCollection()

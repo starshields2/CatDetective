@@ -4,6 +4,9 @@ using UnityEngine;
 public class Cabinet : BaseInteractable, Interactable.IActionInteractable
 {
     [Header("Cabinet")]
+    public Cabinet otherCabinet;
+    public Cabinet thisCabinet;
+
     [SerializeField] private Sprite closedSprite;
     [SerializeField] private Sprite openSprite;
     private SpriteRenderer sr;
@@ -14,64 +17,93 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
     [Header("Movement")]
     [SerializeField] private float catMoveDuration = 0.35f;
 
-    private bool isOpen;
+    [SerializeField] private bool isOpen;
     private bool isMoving;
+    [SerializeField] private bool insideCabinet;
+
+    public TextAsset _associatedDialogue;
+    public OverheadDialogueTemplate _dialogue;
+    public bool firstTime;
 
     protected override void Awake()
     {
         base.Awake();
         
         sr = GetComponent<SpriteRenderer>();
-        
-        sr.sprite = openSprite;
-        isOpen = true;
+     
+        sr.sprite = closedSprite;
+        isOpen = false;
+    }
+
+    public void SwapCabinetOpening()
+    {
+        otherCabinet.isOpen = true;
     }
     
     public void PerformAction()
     {
-        if (isMoving)
-            return;
+        //if (isMoving)
+        //    return;
+
+        if (firstTime)
+        {
+            firstTime = false;
+            _dialogue.preloadedStory = _associatedDialogue;
+            _dialogue.LoadStory();
+        }
+
 
         if (isOpen)
         {
-            StartCoroutine(CloseCabinet());
+
+            StartCoroutine(CloseCabinet()); // if the cabinet is open and quinn is already inside, close the door.
+            
+          
         }
-        else
+        else if (!isOpen)
         {
             StartCoroutine(OpenCabinet());
         }
     }
+   
 
     private IEnumerator CloseCabinet()
     {
+        sr.sprite = openSprite;
+        Debug.Log("Cat go out.");
+        yield return new WaitForSeconds(0.5f);
         isMoving = true;
-
-        // Open cabinet
+       // Cat comes out
+        playerRenderer.sortingLayerName = "Foreground";
+        playerRenderer.sortingOrder = 2;
+        yield return StartCoroutine(MoveCat(player.transform.position, catOutsidePoint.position));
+        // close cabinet
         sr.sprite = closedSprite;
 
         yield return null;
 
-        // Cat comes out
-        playerRenderer.sortingLayerName = "Foreground";
-        yield return StartCoroutine(MoveCat(player.transform.position, catOutsidePoint.position));
+ 
 
         isOpen = false;
-        isMoving = false;
+        isMoving = true;
+        //insideCabinet = false;
     }
 
     private IEnumerator OpenCabinet()
-    {
-        isMoving = true;
-
+    {  
+        sr.sprite = openSprite;
+        Debug.Log("Cat go in.");
+        yield return new WaitForSeconds(0.2f);
         // Cat goes in
         yield return StartCoroutine(MoveCat(player.transform.position, catInsidePoint.position));
-        playerRenderer.sortingLayerName = "Default";
-
+        playerRenderer.sortingLayerName = "Background";
+        playerRenderer.sortingOrder = -50;
         // Then close cabinet
-        sr.sprite = openSprite;
-
         isOpen = true;
-        isMoving = false;
+        //insideCabinet = true;
+        yield return new WaitForSeconds(0.2f);
+        sr.sprite = closedSprite;
+        isMoving = true;
     }
 
     private IEnumerator MoveCat(Vector3 start, Vector3 end)

@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8374845917811405169}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.96, y: 1.6, z: 0}
-  m_LocalScale: {x: 0.26, y: 0.26, z: 0.26}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8374845919170565348}
@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogue: {fileID: 0}
+  _overheadDialogue: {fileID: 0}
   _inventorySystem: {fileID: 0}
   ItemPickedUp: {fileID: 0}
   _playerController: {fileID: 0}
@@ -118,7 +119,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inGameText: {fileID: 0}
   textComponent: {fileID: 0}
+  textComponentUI: {fileID: 0}
   speakerName: {fileID: 0}
+  speechBubble: {fileID: 0}
   textStart: 0
   unitName: Peter
   lines:
@@ -161,17 +164,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpeechBubbleBG
       objectReference: {fileID: 0}
+    - target: {fileID: 8711173110318169328, guid: 752b5c622e9c94647bd491929908581f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8711173110318169329, guid: 752b5c622e9c94647bd491929908581f, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8711173110318169329, guid: 752b5c622e9c94647bd491929908581f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711173110318169329, guid: 752b5c622e9c94647bd491929908581f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711173110318169329, guid: 752b5c622e9c94647bd491929908581f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711173110318169329, guid: 752b5c622e9c94647bd491929908581f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.24
+      value: -1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8711173110318169329, guid: 752b5c622e9c94647bd491929908581f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.44
+      value: 3.44
       objectReference: {fileID: 0}
     - target: {fileID: 8711173110318169329, guid: 752b5c622e9c94647bd491929908581f, type: 3}
       propertyPath: m_LocalPosition.z

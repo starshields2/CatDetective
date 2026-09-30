@@ -10,6 +10,7 @@ public class ActionItem : MonoBehaviour, Interactable.IActionInteractable
         public bool audioCue;
         public bool dialogueCue;
         public bool animation;
+        public bool secondaryAction;
     }
 
     public AudioSource _audio;
@@ -18,6 +19,9 @@ public class ActionItem : MonoBehaviour, Interactable.IActionInteractable
     public Animation _animationToPlay;
 
     [SerializeField] private Actions _actions;   // this is what shows up
+
+    public string actionName;
+
     void Start()
     {
        
@@ -37,10 +41,15 @@ public class ActionItem : MonoBehaviour, Interactable.IActionInteractable
         {
             _animationToPlay.Play();
         }
+        if (_actions.secondaryAction)
+        {
+            TriggerNewAction();
+        }
     }
 
     public void TriggerNewAction()
     {
         Debug.Log("Action Triggered.");
+
     }
 }
