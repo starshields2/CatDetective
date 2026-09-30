@@ -18,7 +18,6 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
     [SerializeField] private float catMoveDuration = 0.35f;
 
     [SerializeField] private bool isOpen;
-    private bool isMoving;
     [SerializeField] private bool insideCabinet;
 
     public TextAsset _associatedDialogue;
@@ -42,9 +41,6 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
     
     public void PerformAction()
     {
-        //if (isMoving)
-        //    return;
-
         if (firstTime)
         {
             firstTime = false;
@@ -72,7 +68,6 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
         sr.sprite = openSprite;
         Debug.Log("Cat go out.");
         yield return new WaitForSeconds(0.5f);
-        isMoving = true;
        // Cat comes out
         playerRenderer.sortingLayerName = "Foreground";
         playerRenderer.sortingOrder = 2;
@@ -85,7 +80,6 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
  
 
         isOpen = false;
-        isMoving = true;
         //insideCabinet = false;
     }
 
@@ -103,7 +97,6 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
         //insideCabinet = true;
         yield return new WaitForSeconds(0.2f);
         sr.sprite = closedSprite;
-        isMoving = true;
     }
 
     private IEnumerator MoveCat(Vector3 start, Vector3 end)

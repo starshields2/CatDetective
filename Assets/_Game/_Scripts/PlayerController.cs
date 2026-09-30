@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     private ClickableSurface pendingJumpSurface;
     private Interactable pendingInteractable;
     
+    private bool queuedClick;
+    private Vector2 queuedClickPosition;
+    
     [HideInInspector] public bool currentlyInsideCar;
     
     void Start()
@@ -51,10 +54,17 @@ public class PlayerController : MonoBehaviour
 
     private void HandleClick()
     {
-        if (!Input.GetMouseButtonDown(0) || moving) return; // if no mouse input end function
+        if (!Input.GetMouseButtonDown(0)) return; // if no mouse input end function
         
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); // get position from mouse click
 
+        if (moving)
+        {
+            queuedClick = true;
+            queuedClickPosition = mousePos;
+            return;
+        }
+        
         Collider2D hit = Physics2D.OverlapPoint(mousePos);
         if (hit)
         {
@@ -161,17 +171,15 @@ public class PlayerController : MonoBehaviour
         
         playerAnim.SetBool("isRunning", true);
         
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPosition,
-            speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards
+            (transform.position, targetPosition, speed * Time.deltaTime);
 
         // if distance between character position and target position is less than 0.01
         // set moving to false
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
             moving = false;
-            
+
             if (pendingJump)
             {
                 pendingJump = false;
@@ -180,15 +188,20 @@ public class PlayerController : MonoBehaviour
 
                 StartCoroutine(JumpTo(pendingJumpTarget));
             }
-            
-            if (pendingInteractable != null)
+
+            if (pendingInteractable)
             {
                 pendingInteractable.Interact();
                 pendingInteractable = null;
             }
         }
 
-   
+        if (queuedClick)
+        {
+            queuedClick = false;
+
+            ProcessQueuedClick(queuedClickPosition);
+        }
     }
 
     IEnumerator JumpTo(Vector3 target)
@@ -276,7 +289,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         
-        float distance = Vector2.Distance(transform.position, interactable.transform.position);
+        float distance = Vector2.Distance(transform.position, interactable.GetInteractionPoint(transform));
 
         if (distance <= interactable.InteractionRange)
         {
@@ -290,5 +303,35 @@ public class PlayerController : MonoBehaviour
         targetPosition = interactable.GetInteractionPoint(transform);
         
         moving = true;
+    }
+    
+    private void ProcessQueuedClick(Vector2 mousePos)
+    {
+        Collider2D hit = Physics2D.OverlapPoint(mousePos);
+
+        if (hit)
+        {
+            Interactable interactable = hit.GetComponent<Interactable>();
+
+            if (interactable)
+            {
+                HandleInteractable(interactable);
+                return;
+            }
+        }
+
+        if (currentlyInsideCar)
+            return;
+
+        ClickableSurface surface = surfaceManager.ResolveSurface(mousePos, preferLower: true);
+
+        if (!surface)
+            return;
+
+        FaceDirection(mousePos.x);
+
+        Vector3 destination = GetDestination(mousePos, surface);
+
+        ExecuteMovement(surface, destination);
     }
 }

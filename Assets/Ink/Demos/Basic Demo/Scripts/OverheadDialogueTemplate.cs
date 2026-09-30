@@ -212,8 +212,8 @@ public class OverheadDialogueTemplate : MonoBehaviour {
 	private TextMeshProUGUI textPrefab = null;
 	[SerializeField]
 	private TextMeshProUGUI speakerText = null;
-	[SerializeField]
-	private Button buttonPrefab = null;
+	//[SerializeField]
+	//private Button buttonPrefab = null;
 
 	public GameObject speakerImage;
 	public string speakerName;

@@ -17,7 +17,7 @@ public class Trowel : BaseInteractable, Interactable.IActionInteractable
     private bool trowelFalling;
     private bool windowClosing;
 
-    private void Awake()
+    private new void Awake()
     {
         base.Awake();
         
@@ -47,7 +47,7 @@ public class Trowel : BaseInteractable, Interactable.IActionInteractable
         // Unlodge the trowel
         trowelFalling = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.AddForce(Vector2.left * 2f, ForceMode2D.Impulse);
+        rb.AddForce(new Vector2 (Vector2.left.x * 2f, Vector2.up.y * 0.5f), ForceMode2D.Impulse);
 
         // Close the window
         windowClosing = true;
