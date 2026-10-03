@@ -14,6 +14,10 @@ public class WateringCan : BaseInteractable, Interactable.IActionInteractable
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float fallDuration;
     [SerializeField] private float knockRotation;
+
+    [Header("Aftermath")]
+    public ActionItem actionItemReference;
+    
     
     public void PerformAction()
     {
@@ -76,6 +80,7 @@ public class WateringCan : BaseInteractable, Interactable.IActionInteractable
         transform.rotation = endRot;
 
         interactable.canInteract = false;
+        actionItemReference.PerformAction();
     }
 
     private float GetGroundY()
