@@ -42,6 +42,7 @@ public class NonPlayerCharacter : BaseInteractable
             else
             {
                 StartTriggeredDialogue();
+                _dialogue.InGameDialogue();
             }
         }
         if(other.tag == "Item")

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WateringCan : BaseInteractable, Interactable.IActionInteractable
 {
@@ -16,7 +17,8 @@ public class WateringCan : BaseInteractable, Interactable.IActionInteractable
     [SerializeField] private float knockRotation;
     [SerializeField] private GameObject makeInteractable;
     [SerializeField] public bool trowelFalling;
-
+    [SerializeField] public Sprite replacement;
+    [SerializeField] public Sprite hoverReplacement;
 
     [Header("Aftermath")]
     public ActionItem actionItemReference;
@@ -85,7 +87,11 @@ public class WateringCan : BaseInteractable, Interactable.IActionInteractable
         interactable.canInteract = false;
         actionItemReference.PerformAction(); 
         makeInteractable.GetComponent<Interactable>().canInteract = true;
-            makeInteractable.GetComponent<BoxCollider2D>().enabled = true;
+        makeInteractable.GetComponent<BoxCollider2D>().enabled = true;
+        SpriteRenderer _doorSP = makeInteractable.GetComponent<SpriteRenderer>();
+        _doorSP.sprite = replacement;
+        Interactable _interactableSP = makeInteractable.GetComponent<Interactable>();
+        _interactableSP.hoverSprite = hoverReplacement;
     }
 
     private float GetGroundY()

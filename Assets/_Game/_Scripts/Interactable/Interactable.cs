@@ -16,7 +16,7 @@ public class Interactable : MonoBehaviour
     [Header("On Hover")]
     [Tooltip("Put in a prefab with empty Sprite Renderer on it")] 
     [SerializeField] private GameObject hoverObject;
-    [SerializeField] private Sprite hoverSprite;
+    [SerializeField] public Sprite hoverSprite;
     private GameObject hoverInstance;
 
     [Header("Interaction")]
