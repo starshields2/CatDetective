@@ -14,6 +14,9 @@ public class WateringCan : BaseInteractable, Interactable.IActionInteractable
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float fallDuration;
     [SerializeField] private float knockRotation;
+    [SerializeField] private GameObject makeInteractable;
+    [SerializeField] public bool trowelFalling;
+
 
     [Header("Aftermath")]
     public ActionItem actionItemReference;
@@ -80,7 +83,9 @@ public class WateringCan : BaseInteractable, Interactable.IActionInteractable
         transform.rotation = endRot;
 
         interactable.canInteract = false;
-        actionItemReference.PerformAction();
+        actionItemReference.PerformAction(); 
+        makeInteractable.GetComponent<Interactable>().canInteract = true;
+            makeInteractable.GetComponent<BoxCollider2D>().enabled = true;
     }
 
     private float GetGroundY()
@@ -95,4 +100,5 @@ public class WateringCan : BaseInteractable, Interactable.IActionInteractable
         }
         return transform.position.y;
     }
+
 }

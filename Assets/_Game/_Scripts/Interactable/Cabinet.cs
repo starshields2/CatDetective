@@ -23,6 +23,7 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
     public TextAsset _associatedDialogue;
     public OverheadDialogueTemplate _dialogue;
     public bool firstTime;
+    public NonPlayerCharacter _ward;
 
     protected override void Awake()
     {
@@ -74,7 +75,7 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
         yield return StartCoroutine(MoveCat(player.transform.position, catOutsidePoint.position));
         // close cabinet
         sr.sprite = closedSprite;
-
+        _ward.stopsPlayer = true;
         yield return null;
 
  
@@ -96,6 +97,7 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
         isOpen = true;
         //insideCabinet = true;
         yield return new WaitForSeconds(0.2f);
+        _ward.stopsPlayer = false;
         sr.sprite = closedSprite;
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NonPlayerCharacter : MonoBehaviour
+public class NonPlayerCharacter : BaseInteractable
 {
     public Dialogue _dialogue;
     public OverheadDialogueTemplate _overheadDialogue;
@@ -11,6 +11,10 @@ public class NonPlayerCharacter : MonoBehaviour
     public GameObject ItemPickedUp;
     public PlayerController _playerController;
     public int storyIndex; //feed this into overhead dialogue template so it knows which story to load. 
+    [SerializeField] private float catMoveDuration = 0.35f;
+
+    public bool stopsPlayer; //use this to stop Quinn if she gets too close
+    [SerializeField] private Transform moveToLocation;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +32,17 @@ public class NonPlayerCharacter : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            StartTriggeredDialogue();
+          
+
+            if (stopsPlayer)
+            {
+                StartCoroutine(RepelCat());
+              
+            }
+            else
+            {
+                StartTriggeredDialogue();
+            }
         }
         if(other.tag == "Item")
         {
@@ -38,6 +52,26 @@ public class NonPlayerCharacter : MonoBehaviour
 
         }
     }
+
+    public void OnTriggerStay2D(Collider2D other)
+    {
+
+    }
+
+    private IEnumerator RepelCat()
+    {
+      
+        _playerController.moving = false;
+        StopAllCoroutines();
+        Debug.Log("Move Quinn somewhere else.");
+        _dialogue.InGameDialogue();
+        yield return StartCoroutine(MoveCat(player.transform.position, moveToLocation.position));
+        //how to make quinn stop moving.
+        yield return null;
+        yield return new WaitForSeconds(1f);
+        StopAllCoroutines();
+    }
+
 
     void OnTriggerExit2D(Collider2D other)
     {
@@ -92,5 +126,23 @@ public class NonPlayerCharacter : MonoBehaviour
     {
         _overheadDialogue.LoadStory();
         
+    }
+
+    private IEnumerator MoveCat(Vector3 start, Vector3 end)
+    {
+        float timer = 0f;
+
+        while (timer < catMoveDuration)
+        {
+            timer += Time.deltaTime;
+
+            float t = timer / catMoveDuration;
+
+            player.transform.position = Vector3.Lerp(start, end, t);
+
+            yield return null;
+        }
+
+        player.transform.position = end;
     }
 }

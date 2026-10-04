@@ -52,23 +52,4 @@ public class Trowel : BaseInteractable, Interactable.IActionInteractable
         // Close the window
         windowClosing = true;
     }
-    
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!trowelFalling)
-            return;
-
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            rb.velocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-
-            rb.bodyType = RigidbodyType2D.Kinematic;
-
-            makeInteractable.GetComponent<Interactable>().canInteract = true;
-            makeInteractable.GetComponent<BoxCollider2D>().enabled = true;
-            
-            trowelFalling = false;
-        }
-    }
 }

@@ -22,6 +22,7 @@ public class Dialogue : MonoBehaviour
     [SerializeField] private AudioSource _notification;
 
     public int index;
+    private int randIndex;
 
     public enum SpeechType
     {
@@ -109,7 +110,7 @@ public class Dialogue : MonoBehaviour
 
     IEnumerator ClearDialogueBubble()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(6f);
         speechBubble.SetActive(false);
     }
 
@@ -126,7 +127,7 @@ public class Dialogue : MonoBehaviour
          
             textComponent.text = "Error: NO MORE LINES!";
         }
-        index += 1;
+        index = Random.Range(0, lines.Length);
     }
 
     public void InGameDialogue()
