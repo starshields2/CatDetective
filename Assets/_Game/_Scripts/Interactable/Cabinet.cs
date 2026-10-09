@@ -76,6 +76,8 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
         // close cabinet
         sr.sprite = closedSprite;
         _ward.stopsPlayer = true;
+        BoxCollider2D _wardBC = _ward.GetComponent<BoxCollider2D>();
+        _wardBC.enabled = true;
         yield return null;
 
  
@@ -98,6 +100,8 @@ public class Cabinet : BaseInteractable, Interactable.IActionInteractable
         //insideCabinet = true;
         yield return new WaitForSeconds(0.2f);
         _ward.stopsPlayer = false;
+        BoxCollider2D _wardBC = _ward.GetComponent<BoxCollider2D>();
+        _wardBC.enabled = false;
         sr.sprite = closedSprite;
     }
 

@@ -3106,7 +3106,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1255740406}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1719553892}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1255740406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4976,7 +4988,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 212138555}
-  musicClip: {fileID: 8300000, guid: 229b8f4fec9ee37409c474414203242c, type: 3}
+  defaultTrack: {fileID: 8300000, guid: 6319bcf620cd8db40be16a1fbbc3009a, type: 3}
+  basementTrack: {fileID: 8300000, guid: 95026db03f7f4f94e926eee96df6e7bf, type: 3}
 --- !u!4 &1719553893
 Transform:
   m_ObjectHideFlags: 0
@@ -4999,6 +5012,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2137124811323996002, guid: b45ee1398659fb64fb4104f1763714c1, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2751164964798606984, guid: b45ee1398659fb64fb4104f1763714c1, type: 3}
       propertyPath: m_RootOrder
       value: 5

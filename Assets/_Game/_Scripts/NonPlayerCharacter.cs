@@ -41,7 +41,7 @@ public class NonPlayerCharacter : BaseInteractable
             }
             else
             {
-                StartTriggeredDialogue();
+               // StartTriggeredDialogue();
                 _dialogue.InGameDialogue();
             }
         }
