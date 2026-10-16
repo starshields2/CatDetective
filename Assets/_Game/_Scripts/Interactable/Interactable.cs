@@ -6,9 +6,14 @@ public class Interactable : MonoBehaviour
     {
         Action, Item, Sequence
     }
-    
+    public enum CursorType
+    {
+        Search, Move, Talk, Special
+    }
+
     [Header("General")]
     public InteractableType interactableType;
+    public CursorType cursorType;
     public GameObject actionReference;
     public bool canInteract = true;
     public bool isKeyItem;
@@ -18,6 +23,7 @@ public class Interactable : MonoBehaviour
     [SerializeField] private GameObject hoverObject;
     [SerializeField] public Sprite hoverSprite;
     private GameObject hoverInstance;
+    public CursorManagement cursorManager;
 
     [Header("Interaction")]
     [SerializeField] private Transform interactablePoint;
@@ -32,7 +38,7 @@ public class Interactable : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-        
+        cursorManager = GameObject.Find("CursorManager").GetComponent<CursorManagement>();
         surfaceManager = FindObjectOfType<SurfaceManager>();
     }
     
@@ -136,6 +142,25 @@ public class Interactable : MonoBehaviour
         SpriteRenderer hoverRenderer = hoverInstance.GetComponent<SpriteRenderer>();
         hoverRenderer.sprite = hoverSprite;
         hoverRenderer.sortingOrder = actionReference.GetComponent<SpriteRenderer>().sortingOrder-1;
+
+        switch (cursorType)
+        {
+            case CursorType.Search:
+                cursorManager.OnSearchCursorEnter();
+                break;
+
+            case CursorType.Move:
+                cursorManager.OnMoveCursorEnter();
+                break;
+
+            case CursorType.Talk:
+                cursorManager.OnTalkCursorEnter();
+                break;
+            case CursorType.Special:
+                break;
+            default:
+                break;
+        }
     }
 
     public void UnhoverInteract()
@@ -145,5 +170,6 @@ public class Interactable : MonoBehaviour
         Destroy(hoverInstance);
         
         hoverInstance = null;
+        cursorManager.OnDefaultCursorEnter();
     }
 }

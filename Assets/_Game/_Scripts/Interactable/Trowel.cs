@@ -41,15 +41,20 @@ public class Trowel : BaseInteractable, Interactable.IActionInteractable
     
     public void PerformAction()
     {
-        if (trowelFalling)
-            return;
+        StartCoroutine(CloseWindow());
+    }
 
+    public IEnumerator CloseWindow()
+    {
         // Unlodge the trowel
         trowelFalling = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.AddForce(new Vector2 (Vector2.left.x * 2f, Vector2.up.y * 0.5f), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(Vector2.left.x * 2f, Vector2.up.y * 0.5f), ForceMode2D.Impulse);
 
         // Close the window
         windowClosing = true;
+        yield return new WaitForSeconds(1.3f);
+        rb.bodyType = RigidbodyType2D.Static;
+        trowelFalling = false;
     }
 }

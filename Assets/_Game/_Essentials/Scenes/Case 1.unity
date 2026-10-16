@@ -383,7 +383,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 18529398}
-  - component: {fileID: 18529397}
   m_Layer: 0
   m_Name: audio
   m_TagString: Untagged
@@ -391,20 +390,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &18529397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18529396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7396512ec0f9c584e97fa179c6de143b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
 --- !u!4 &18529398
 Transform:
   m_ObjectHideFlags: 0
@@ -1362,11 +1347,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 120852447}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 0}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 0
   player: {fileID: 0}
@@ -2337,6 +2324,7 @@ GameObject:
   - component: {fileID: 174899561}
   - component: {fileID: 174899560}
   - component: {fileID: 174899559}
+  - component: {fileID: 174899562}
   m_Layer: 6
   m_Name: Ground (Room 4)
   m_TagString: Untagged
@@ -2450,6 +2438,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &174899562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 174899557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c4174e3b7e0b341a51d5d93aeb9a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cursorConnect: {fileID: 681956722}
 --- !u!1 &176921462
 GameObject:
   m_ObjectHideFlags: 0
@@ -3600,11 +3601,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 274172137}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 0}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 2
   player: {fileID: 0}
@@ -4507,11 +4510,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 363657344}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 0}
   hoverSprite: {fileID: 0}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 0
   player: {fileID: 0}
@@ -4964,11 +4969,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 402319846}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 0}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 2
   player: {fileID: 0}
@@ -6890,6 +6897,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &681956721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 681956723}
+  - component: {fileID: 681956722}
+  m_Layer: 0
+  m_Name: CursorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &681956722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681956721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3341f8813d1ed248b9edd24f3e8009e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorTexture: {fileID: 2800000, guid: c2b421735eb01ad4dad1375acd459caf, type: 3}
+  searchCursor: {fileID: 2800000, guid: a35576cf25502144189fc8c97a5ec26f, type: 3}
+  talkCursor: {fileID: 2800000, guid: 0c62d3ece6b6a4446b0a8be0c8f26ddd, type: 3}
+  moveCursor: {fileID: 2800000, guid: 701a42fe4857c864385c943bf310b0bf, type: 3}
+  hotSpot: {x: 0, y: 0}
+--- !u!4 &681956723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681956721}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 177.97368, y: 3.4345045, z: -0.031755872}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 32
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &684328449
 GameObject:
   m_ObjectHideFlags: 0
@@ -6902,6 +6958,7 @@ GameObject:
   - component: {fileID: 684328452}
   - component: {fileID: 684328451}
   - component: {fileID: 684328450}
+  - component: {fileID: 684328454}
   m_Layer: 6
   m_Name: Ground (Room 2)
   m_TagString: Ground
@@ -7015,6 +7072,19 @@ Transform:
   m_Father: {fileID: 1255926668}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &684328454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684328449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c4174e3b7e0b341a51d5d93aeb9a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cursorConnect: {fileID: 681956722}
 --- !u!1 &715704252
 GameObject:
   m_ObjectHideFlags: 0
@@ -7975,11 +8045,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 807881518}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 21300000, guid: 80165afc40f32704c95fc973a25ac7af, type: 3}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 5
   player: {fileID: 0}
@@ -9106,11 +9178,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 984297935}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 21300000, guid: 2853d05c7a7ae994d9409e48c3c94f9b, type: 3}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 1265148151}
   interactionRange: 5
   player: {fileID: 0}
@@ -9917,11 +9991,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 1100341320}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 0}
   hoverSprite: {fileID: 0}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 0
   player: {fileID: 0}
@@ -11961,6 +12037,7 @@ GameObject:
   - component: {fileID: 1341028861}
   - component: {fileID: 1341028863}
   - component: {fileID: 1341028864}
+  - component: {fileID: 1341028865}
   m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
@@ -12074,6 +12151,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightLevel: 0
+--- !u!114 &1341028865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341028860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c4174e3b7e0b341a51d5d93aeb9a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cursorConnect: {fileID: 681956722}
 --- !u!1 &1345410393
 GameObject:
   m_ObjectHideFlags: 0
@@ -12970,11 +13060,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 1475231492}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 0}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 2
   player: {fileID: 0}
@@ -14940,11 +15032,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 1632384565}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 21300000, guid: 3969fc0191d6e6f4ea33ea983320ba58, type: 3}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 2
   player: {fileID: 0}
@@ -15612,11 +15706,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 1702218281}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 0}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 2
   player: {fileID: 0}
@@ -17257,11 +17353,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 1924179138}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 207117247, guid: ebc2e4c9f160b5b4b96c2697238b770b, type: 3}
+  cursorManager: {fileID: 681956722}
   interactablePoint: {fileID: 0}
   interactionRange: 0
   player: {fileID: 0}
@@ -17503,11 +17601,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 1943551761}
   canInteract: 0
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 21300000, guid: ce8f47af3ab45724bae5eb0f1cb70233, type: 3}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 194924491}
   interactionRange: 2
   player: {fileID: 0}
@@ -17651,11 +17751,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 1943751187}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 21300000, guid: bcd596e15d20c22468bd75ec6d260cdd, type: 3}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 2
   player: {fileID: 0}
@@ -17838,6 +17940,7 @@ GameObject:
   - component: {fileID: 2021338132}
   - component: {fileID: 2021338131}
   - component: {fileID: 2021338130}
+  - component: {fileID: 2021338133}
   m_Layer: 6
   m_Name: Ground (Room 3)
   m_TagString: Untagged
@@ -17951,6 +18054,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2021338133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021338128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c4174e3b7e0b341a51d5d93aeb9a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cursorConnect: {fileID: 681956722}
 --- !u!1 &2049059936
 GameObject:
   m_ObjectHideFlags: 0
@@ -18230,11 +18346,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  cursorType: 0
   actionReference: {fileID: 2064127684}
   canInteract: 1
   isKeyItem: 0
   hoverObject: {fileID: 733342428790198636, guid: b4e980f39cda6c44db7eef7828517734, type: 3}
   hoverSprite: {fileID: 21300000, guid: 3969fc0191d6e6f4ea33ea983320ba58, type: 3}
+  cursorManager: {fileID: 0}
   interactablePoint: {fileID: 0}
   interactionRange: 2
   player: {fileID: 0}
