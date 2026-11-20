@@ -8,7 +8,7 @@ using TMPro;
 public class SettingsMenuManager : MonoBehaviour
 {
     public AudioMixer audioMixer;
-    private bool muted;
+    public bool muted;
    private Resolution[] resolutions;
     private List<Resolution> filteredResolutions;
     private float currentRefreshRate;
@@ -64,6 +64,7 @@ public class SettingsMenuManager : MonoBehaviour
 
 public void SetMasterVolume(float volume)
     {
+        volume = Mathf.Log10(volume) * 20f;
         Debug.Log(volume);
         audioMixer.SetFloat("MasterVolume", volume);
     }
@@ -82,19 +83,17 @@ public void SetMasterVolume(float volume)
 
     public void MuteAll()
     {
-        if (!muted)
-        {
-            audioMixer.SetFloat("Music", -80);
-            audioMixer.SetFloat("MasterVolume", -80);
-            audioMixer.SetFloat("Sound", -80);
-            muted = !muted;
-        }
-
         if (muted)
         {
-            audioMixer.SetFloat("Music", 0);
-            audioMixer.SetFloat("MasterVolume", 0);
-            audioMixer.SetFloat("Sound", 0);
+            SetMasterVolume(1f);
+            Debug.Log("Volume set to: something");
+            muted = false;
+        }
+        else
+        {
+            SetMasterVolume(0f);
+            Debug.Log("Volume set to: something else.");
+            muted = true;
         }
     }
 
