@@ -1,19 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using TMPro;
 
 public class SettingsMenuManager : MonoBehaviour
 {
     public AudioMixer audioMixer;
-    public bool muted;
-   private Resolution[] resolutions;
+    private Resolution[] resolutions;
     private List<Resolution> filteredResolutions;
     private float currentRefreshRate;
     public TMP_Dropdown resolutionDropdown;
     public int currentResolutionIndex;
+    [SerializeField] private Toggle muteToggle;
 
     void Start()
     {
@@ -22,6 +21,7 @@ public class SettingsMenuManager : MonoBehaviour
         currentRefreshRate = Screen.currentResolution.refreshRate;
         resolutionDropdown.ClearOptions();
         filteredResolutions = new List<Resolution>();
+        muteToggle.onValueChanged.AddListener(MuteAll);
         for (int i = 0; i < resolutions.Length; i++)
         {
             if(resolutions[i].refreshRate == currentRefreshRate)
@@ -29,7 +29,6 @@ public class SettingsMenuManager : MonoBehaviour
                 filteredResolutions.Add(resolutions[i]);
             }
         }
-
 
 
         List<string> options = new List<string>();
@@ -62,38 +61,33 @@ public class SettingsMenuManager : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, true);
     }
 
-public void SetMasterVolume(float volume)
+    public void SetMasterVolume(float volume)
     {
-        volume = Mathf.Log10(volume) * 20f;
-        Debug.Log(volume);
-        audioMixer.SetFloat("MasterVolume", volume);
+        Debug.Log("Master: " + volume);
+        AudioManager.Instance.SetVolume("MasterVolume", volume);
     }
 
     public void SetSoundVolume(float volume)
     {
-        Debug.Log(volume);
-        audioMixer.SetFloat("Sound", volume);
+        Debug.Log("Sound: " + volume);
+        AudioManager.Instance.SetVolume("Sound", volume);
     }
 
     public void SetMusicVolume(float volume)
     {
-        Debug.Log(volume);
-        audioMixer.SetFloat("Music", volume);
+        Debug.Log("Music: " + volume);
+        AudioManager.Instance.SetVolume("Music", volume);
     }
 
-    public void MuteAll()
+    public void MuteAll(bool isChecked)
     {
-        if (muted)
+        if (isChecked)
         {
-            SetMasterVolume(1f);
-            Debug.Log("Volume set to: something");
-            muted = false;
+            SetMasterVolume(-1f);
         }
         else
         {
-            SetMasterVolume(0f);
-            Debug.Log("Volume set to: something else.");
-            muted = true;
+            SetMasterVolume(100f);
         }
     }
 

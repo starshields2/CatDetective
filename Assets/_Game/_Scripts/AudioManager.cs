@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
+    public AudioMixer audioMixer;
 
     void Awake()
     {
@@ -24,9 +26,10 @@ public class AudioManager : MonoBehaviour
     }
     
 
-    public void SetVolume(float volume)
+    public void SetVolume(string mixerName, float volume)
     {
-        
+        volume = Mathf.Log10(volume/100) * 20f;
+        audioMixer.SetFloat(mixerName, volume);
     }
 
     public void PlaySFX(AudioClip clip)
